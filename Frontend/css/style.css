@@ -1,10 +1,3 @@
 .page-footer {
-    background-color: #042444; /* Color de fondo del footer */
-    text-align: center ;
-    padding-top: 1px; /* Reduce el padding superior */
-    padding-bottom: 1px; /* Reduce el padding inferior */
-}
-
-.nav-wrapper {
-    background: linear-gradient(to right, #1e3c72, #2a5298);
+    background-color: #153c75 ;
 }
