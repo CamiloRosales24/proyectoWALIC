@@ -1,93 +1,126 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" ng-app="inventoryApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GESTION DE INVENTARIO</title>
+    <title>Sistema de Inventario WALIC</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-      
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css"> <!-- Aquí enlazas tu archivo CSS personalizado -->
 </head>
+<body ng-controller="GestionController">
 
-<body>
-
-    <header>   
-        <style>
-            .navbar {
-                background-color: #153c75; /* Color azul oscuro */
-            }
-            .btn-logout {
-                background-color: teal lighten-2; 
-            }
-
-            .page-footer {
-                background-color: #153c75;
-                align-items: center;
-                display:flex;
-                justify-content:center;
-            }
-            
-        </style>
-
-        <!-- Barra de navegación -->
-        <nav class="navbar">
+    <header>
+        <nav class="navbar blue darken-3">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo"><img src="../img/Logo_Tools_Tr.png" alt="Logo" style="height: 50px;" align-center></a>
-                        
+                <a href="#" class="brand-logo"><img src="../img/Logo_Tools_Tr.png" alt="Logo" style="height: 50px;"></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="#" class="btn btn-logout">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </nav>
-        <nav class=indigo lighten-3>
 
-                <div class="nav-wrapper-2">
+        <!-- Secondary Navbar -->
+        <nav class="navbar blue">
+            <div class="nav-wrapper-2">
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="inicio.html">INICIO</a></li>
-                        <li><a href="gestion.html">GESTION</a></li>
-                        <li><a href="usuario.html">USUARIO</a></li>
-                        <li><a href="soporte.html">SOPORTE</a></li>
+                    <li><a href="gestion.html">GESTIÓN</a></li>
+                    <li><a href="usuario.html">USUARIO</a></li>
+                    <li><a href="soporte.html">SOPORTE</a></li>
                 </ul>
             </div>
         </nav>
     </header> 
 
-    <main>
+    <!-- Main Content -->
+    <main class="container">
+        <h1> Gestión de Inventario </h1>
 
-
-        
-            
-    </main>
-
-    <!-- Footer PIE DE PAGINA-->
-
-    <footer class="page-footer" >
-        <div class="container">
-            <div class="row">
-                <div class="col 16 offset-s3">
-                    <img src="../img/Logo_Walic_Tr.png" alt="Logo" style="width: 100px;">
-                </div>
+        <!-- Gestionar Inventario y Buscar -->
+        <div class="row">
+            <!-- Columna de Listado de Items -->
+            <div class="col s12 m6">
+                <!-- Barra de Búsqueda -->
                 <div class="row">
-                    <p class="left-align teal-text text-accent-3">Software de Inventario</p>
+                    <div class="input-field col s12">
+                        <input id="search_item" type="text" ng-model="searchItem" placeholder="Buscar ítem">
+                        <label for="search_item">Buscar Ítem</label>
+                    </div>
                 </div>
-                
+
+                <!-- Lista de Items -->
+                <ul class="collection with-header">
+                    <li class="collection-header">
+                        <h5>
+                            Items en Inventario
+                            <i class="material-icons right" ng-click="sortBy('name')">sort</i>
+                        </h5>
+                    </li>
+                    <li class="collection-item" ng-repeat="item in items | filter:searchItem | orderBy:sortColumn">
+                        <div class="row">
+                            <div class="col s8">
+                                {{ item.name }}
+                            </div>
+                            <div class="col s2">
+                                {{ item.quantity }}
+                            </div>
+                            <div class="col s2">
+                                <a href="#!" class="secondary-content" ng-click="removeItem($index)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Columna de Búsqueda y Añadir Ítem -->
+            <div class="col s12 m6">
+                <div class="row">
+                    <form ng-submit="addItem()">
+                        <div class="input-field col s12">
+                            <input id="item_name" type="text" ng-model="newItemName" required>
+                            <label for="item_name">Nombre del Ítem</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="item_quantity" type="number" ng-model="newItemQuantity" required>
+                            <label for="item_quantity">Cantidad</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light" type="submit">Añadir</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer blue darken-3">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center-align">
+                    <img src="../img/Logo_Walic_Tr.png" alt="Logo" style="width: 100px;">
+                    <p class="teal-text text-accent-3">Software de Inventario 2024</p>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    
-          
-
-    <!-- Compiled and minified JavaScript -->
+    <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-</body>
+    <!-- AngularJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
 
+    <!-- Custom JS -->
+    <script src="../js/gestionController.js"></script>
+
+</body>
 </html>

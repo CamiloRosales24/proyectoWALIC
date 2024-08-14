@@ -1,3 +1,14 @@
+
+.navbar {
+    background-color: #153c75; /* Color azul oscuro */
+}
+.btn-logout {
+    background-color: teal lighten-2; 
+}
+
 .page-footer {
-    background-color: #153c75 ;
+    background-color: #153c75;
+    align-items: center;
+    display:flex;
+    justify-content:center;
 }
